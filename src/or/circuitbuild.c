@@ -35,6 +35,7 @@
 #include "onion.h"
 #include "onion_tap.h"
 #include "onion_fast.h"
+#include "path.h"
 #include "policies.h"
 #include "transports.h"
 #include "relay.h"
@@ -1822,7 +1823,7 @@ pick_rendezvous_node(router_crn_flags_t flags)
   }
 #endif
 
-  return router_choose_random_node(NULL, options->ExcludeNodes, flags);
+  return path_choose_random_node(NULL, options->ExcludeNodes, flags);
 }
 
 /** Return a pointer to a suitable router to be the exit node for the
@@ -1851,7 +1852,7 @@ choose_good_exit_server(uint8_t purpose,
       if (options->AllowInvalid_ & ALLOW_INVALID_MIDDLE)
         flags |= CRN_ALLOW_INVALID;
       if (is_internal) /* pick it like a middle hop */
-        return router_choose_random_node(NULL, options->ExcludeNodes, flags);
+        return path_choose_random_node(NULL, options->ExcludeNodes, flags);
       else
         return choose_good_exit_server_general(need_uptime,need_capacity);
     case CIRCUIT_PURPOSE_C_ESTABLISH_REND:
@@ -2116,7 +2117,7 @@ choose_good_middle_server(uint8_t purpose,
     flags |= CRN_NEED_CAPACITY;
   if (options->AllowInvalid_ & ALLOW_INVALID_MIDDLE)
     flags |= CRN_ALLOW_INVALID;
-  choice = router_choose_random_node(excluded, options->ExcludeNodes, flags);
+  choice = path_choose_random_node(excluded, options->ExcludeNodes, flags);
   smartlist_free(excluded);
   return choice;
 }
@@ -2190,7 +2191,7 @@ choose_good_entry_server(uint8_t purpose, cpath_build_state_t *state)
   if (options->AllowInvalid_ & ALLOW_INVALID_ENTRY)
     flags |= CRN_ALLOW_INVALID;
 
-  choice = router_choose_random_node(excluded, options->ExcludeNodes, flags);
+  choice = path_choose_random_node(excluded, options->ExcludeNodes, flags);
   smartlist_free(excluded);
   return choice;
 }

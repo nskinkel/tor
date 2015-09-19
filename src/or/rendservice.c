@@ -20,6 +20,7 @@
 #include "main.h"
 #include "networkstatus.h"
 #include "nodelist.h"
+#include "path.h"
 #include "rendclient.h"
 #include "rendcommon.h"
 #include "rendservice.h"
@@ -3569,8 +3570,8 @@ rend_consider_services_intro_points(void)
       router_crn_flags_t flags = CRN_NEED_UPTIME|CRN_NEED_DESC;
       if (get_options()->AllowInvalid_ & ALLOW_INVALID_INTRODUCTION)
         flags |= CRN_ALLOW_INVALID;
-      node = router_choose_random_node(exclude_nodes,
-                                       options->ExcludeNodes, flags);
+      node = path_choose_random_node(exclude_nodes,
+                                     options->ExcludeNodes, flags);
       if (!node) {
         log_warn(LD_REND,
                  "We only have %d introduction points established for %s; "
