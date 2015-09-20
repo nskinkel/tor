@@ -29,6 +29,7 @@
 #include "microdesc.h"
 #include "networkstatus.h"
 #include "nodelist.h"
+#include "path.h"
 #include "policies.h"
 #include "reasons.h"
 #include "rendcommon.h"
@@ -64,9 +65,6 @@ DECLARE_TYPED_DIGESTMAP_FNS(dsmap_, digest_ds_map_t, download_status_t)
 typedef struct cert_list_t cert_list_t;
 
 /* static function prototypes */
-static int compute_weighted_bandwidths(const smartlist_t *sl,
-                                       bandwidth_weight_rule_t rule,
-                                       u64_dbl_t **bandwidths_out);
 static const routerstatus_t *router_pick_directory_server_impl(
                               dirinfo_type_t auth, int flags, int *n_busy_out);
 static const routerstatus_t *router_pick_trusteddirserver_impl(
@@ -1777,7 +1775,8 @@ router_reset_status_download_failures(void)
  * Note the type mismatch: This function takes a routerinfo, but adds nodes
  * to the smartlist!
  */
-static void
+//static void
+void
 routerlist_add_node_and_family(smartlist_t *sl, const routerinfo_t *router)
 {
   /* XXXX MOVE ? */

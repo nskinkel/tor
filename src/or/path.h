@@ -1,6 +1,18 @@
 #ifndef TOR_PATH_H
 #define TOR_PATH_H
 
+#include "or.h"
+
+// XXX wtf is this shit?
+//#ifdef ROUTERLIST_PRIVATE
+/** Helper type for choosing routers by bandwidth: contains a union of
+ * double and uint64_t. Before we call scale_array_elements_to_u64, it holds
+ * a double; after, it holds a uint64_t. */
+typedef union u64_dbl_t {
+  uint64_t u64;
+  double dbl;
+} u64_dbl_t;
+
 // return a list of nodes as a suitable path for a given purpose
 //const smartlist_t *choose_circuit_path(uint8_t purpose, int flags);
 // return a new, random entry guard
@@ -20,7 +32,7 @@ int compute_weighted_bandwidths(const smartlist_t *sl,
                                 u64_dbl_t **bandwidths_out);
 const node_t *node_sl_choose_by_bandwidth(const smartlist_t *sl,
                                           bandwidth_weight_rule_t rule);
-const node_t *node_sl_choose_by_bandwidth(const smartlist *sl,
+const node_t *node_sl_choose_by_bandwidth(const smartlist_t *sl,
                                           bandwidth_weight_rule_t rule);
 
 #endif

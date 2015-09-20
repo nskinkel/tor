@@ -58,6 +58,8 @@ const routerstatus_t *router_pick_fallback_dirserver(dirinfo_type_t type,
 int router_get_my_share_of_directory_requests(double *v3_share_out);
 void router_reset_status_download_failures(void);
 int routers_have_same_or_addrs(const routerinfo_t *r1, const routerinfo_t *r2);
+void routerlist_add_node_and_family(smartlist_t *sl,
+                                    const routerinfo_t *router);
 void router_add_running_nodes_to_smartlist(smartlist_t *sl, int allow_invalid,
                                            int need_uptime, int need_capacity,
                                            int need_guard, int need_desc);
@@ -212,18 +214,14 @@ int hex_digest_nickname_matches(const char *hexdigest,
                                 const char *nickname, int is_named);
 
 #ifdef ROUTERLIST_PRIVATE
+// XXX TODO: get rid of this shit -> moved to path.h
 /** Helper type for choosing routers by bandwidth: contains a union of
  * double and uint64_t. Before we call scale_array_elements_to_u64, it holds
  * a double; after, it holds a uint64_t. */
-typedef union u64_dbl_t {
-  uint64_t u64;
-  double dbl;
-} u64_dbl_t;
-
-STATIC int choose_array_element_by_weight(const u64_dbl_t *entries,
-                                          int n_entries);
-STATIC void scale_array_elements_to_u64(u64_dbl_t *entries, int n_entries,
-                                        uint64_t *total_out);
+//typedef union u64_dbl_t {
+//  uint64_t u64;
+//  double dbl;
+//} u64_dbl_t;
 
 MOCK_DECL(int, router_descriptor_is_older_than, (const routerinfo_t *router,
                                                  int seconds));

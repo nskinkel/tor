@@ -29,6 +29,7 @@
 #include "microdesc.h"
 #include "networkstatus.h"
 #include "nodelist.h"
+#include "path.h"
 #include "policies.h"
 #include "router.h"
 #include "routerlist.h"

@@ -1,6 +1,9 @@
 #include "or.h"
 #include "config.h"
+#include "entrynodes.h"
+#include "networkstatus.h"
 #include "nodelist.h"
+#include "path.h"
 #include "policies.h"
 #include "reasons.h"
 #include "router.h"
@@ -491,7 +494,7 @@ path_choose_random_node(smartlist_t *excludedsmartlist,
              need_uptime?", stable":"",
              need_guard?", guard":"");
     flags &= ~ (CRN_NEED_UPTIME|CRN_NEED_CAPACITY|CRN_NEED_GUARD);
-    choice = router_choose_random_node(
+    choice = path_choose_random_node(
                      excludedsmartlist, excludedset, flags);
   }
   smartlist_free(excludednodes);

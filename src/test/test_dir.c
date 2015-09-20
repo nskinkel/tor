@@ -20,6 +20,7 @@
 #include "dirvote.h"
 #include "hibernate.h"
 #include "networkstatus.h"
+#include "path.h"
 #include "router.h"
 #include "routerkeys.h"
 #include "routerlist.h"
